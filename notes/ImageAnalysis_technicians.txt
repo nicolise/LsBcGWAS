@@ -1,0 +1,15 @@
+LsBcGWAS Image analysis
+
+Mask edits:
+72h Rep_01
+127: Josue leaf/ lesion
+208A: Matisse leaf/ lesion
+208B: Matisse leaf/ Josue lesion
+
+72h Rep_02
+127: Aleshia leaf/ lesion
+208A: Josue leaf/ lesion
+208B: Matisse leaf/ lesion
+
+For all: Nicole leaf half delimitation
+Aleshia ruler measurements
