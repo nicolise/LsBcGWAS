@@ -1,5 +1,5 @@
 rm(list=ls())
-setwd("~/Projects/LsBcGWAS/images/Rep_02/05_extractFeat/")
+setwd("~/Projects/LsBcGWAS/images/Rep_02/05_extractFeat/redo")
 
 #install EBImage and CRImage (only need to do this once per R installation)
 #source("https://bioconductor.org/biocLite.R")
@@ -60,7 +60,7 @@ label4Nicole <- function(orig.label , image.f = RawFiles[f]){
 }
 
 #----------------------------------------------------------------------
-RawFiles <- list.files(pattern = ".JPG")
+RawFiles <- list.files(pattern = "72h.JPG")
 LeafMaskFiles <- list.files(pattern= "LeafMask.tif")
 LesionMaskFiles <- list.files(pattern="LesionMask.tif")
 

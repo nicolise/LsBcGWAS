@@ -28,7 +28,7 @@
 rm(list=ls())
 #learn current directory, and set it to the correct one
 getwd()
-setwd("~/Projects/LsBcGWAS/images/Rep_02/03_masked")
+setwd("~/Projects/LsBcGWAS/images/Rep_02/03_masked/redo")
 
 #only run this once to install image analysis
 #source("http://bioconductor.org/biocLite.R")
