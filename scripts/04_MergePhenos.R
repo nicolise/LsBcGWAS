@@ -26,8 +26,25 @@ names(allisolates)[1] <- "IsolateID"
 names(allisolates)[2] <- "BcGeno_01"
 names(allisolates)[3] <- "BcGeno_02"
 #headers for Celine: Num_ID Exp Rep Flat Domest PlantGeno IndPlant IsolateID Scale.LS Taxon Wi_Do Full_key_plant Plant_isol Isolate_taxon_key
-myfactors_rep1 <- myfactors_rep1[,c("Exp","Block","Tray","Species","LsGeno","BcGeno","Column","Image","Object")]
-myfactors_rep2 <- myfactors_rep2[,c("Exp","Block","Tray","Species","LsGeno","BcGeno","Column","Image","Object")]
+
+#extract letter from myfactors_rep1$Row 
+#then append letter to Tray
+myfactors_rep1$TrayUL <- NA
+for (i in 1:nrow(myfactors_rep1)){
+  my_x <- myfactors_rep1[i,8]
+  myfactors_rep1[i,13] <- stri_sub(my_x,1,1)
+}
+myfactors_rep1$TrayUL <- paste(myfactors_rep1$Tray, myfactors_rep1$TrayUL, sep="")
+
+myfactors_rep2$TrayUL <- NA
+for (i in 1:nrow(myfactors_rep2)){
+  my_x <- myfactors_rep2[i,8]
+  myfactors_rep2[i,13] <- stri_sub(my_x,1,1)
+}
+myfactors_rep2$TrayUL <- paste(myfactors_rep2$Tray, myfactors_rep2$TrayUL, sep="")
+
+myfactors_rep1 <- myfactors_rep1[,c("Exp","Block","Tray","TrayUL","Species","LsGeno","BcGeno","Column","Image","Object")]
+myfactors_rep2 <- myfactors_rep2[,c("Exp","Block","Tray","TrayUL","Species","LsGeno","BcGeno","Column","Image","Object")]
 
 #now fix myplants columns
 myplants_rep1 <- myplants_rep1[,c("Exp","Block","Image","LsGeno","Species","CHAMBER","GrowTray","IndPlant")]
@@ -51,13 +68,15 @@ mydata_rep2 <- mydata_rep2[,c("img.obj","Lesion.Size")]
 fullinfo_rep2 <- merge(myfactors_rep2, mydata_rep2, by="img.obj")
 #then add IsolateID from allisolates
 #rep1
-names(fullinfo_rep1)[7] <- "BcGeno_01"
+names(fullinfo_rep1)[8] <- "BcGeno_01"
 fullinfo_rep1 <- merge(fullinfo_rep1, allisolates, by="BcGeno_01") #removes control
-fullinfo_rep1 <- fullinfo_rep1[,c("Exp","Block","Tray","Species","LsGeno","IsolateID","Column","Lesion.Size", "Image")]
+fullinfo_rep1 <- fullinfo_rep1[,c("Exp","Block","TrayUL", "Species","LsGeno","IsolateID","Column","Lesion.Size", "Image")]
+names(fullinfo_rep1)[3] <- "Tray"
 #rep2
-names(fullinfo_rep2)[7] <- "BcGeno_02"
+names(fullinfo_rep2)[8] <- "BcGeno_02"
 fullinfo_rep2 <- merge(fullinfo_rep2, allisolates, by="BcGeno_02") #removes control
-fullinfo_rep2 <- fullinfo_rep2[,c("Exp","Block","Tray","Species","LsGeno","IsolateID","Column","Lesion.Size","Image")]
+fullinfo_rep2 <- fullinfo_rep2[,c("Exp","Block","TrayUL","Species","LsGeno","IsolateID","Column","Lesion.Size","Image")]
+names(fullinfo_rep2)[3] <- "Tray"
 
 #then combine both experiments
 fullinfo_rep1 <- fullinfo_rep1[,c("Exp","Block","Tray","Species","LsGeno","Column","Image","Lesion.Size","IsolateID")]
@@ -113,3 +132,4 @@ fullinfo$Full_key_plant <- paste(fullinfo$Wi_Do, fullinfo$PlantGeno, sep="_")
 fullinfo$Plant_isol <- paste(fullinfo$IndPlant, fullinfo$IsolateID, sep="_")
 fullinfo$Isolate_taxon_key <- paste(fullinfo$IsolateID, fullinfo$Taxon, sep="_")
 write.csv(fullinfo, "BcLsGWAS_forCC.csv")
+#fullinfo <- read.csv("BcLsGWAS_forCC.csv")
